@@ -1,0 +1,24 @@
+﻿@page "/character/{RealmName}/{CharacterName}"
+
+@if (CharacterProfile != null)
+{
+    <MudGrid>
+        <MudItem xs="3">
+            <MudImage Fluid="true"
+                      Src="@CharacterProfile.ThumbnailUrl"
+                      Alt="@($"{CharacterProfile.Name}-{CharacterProfile.Realm}")"
+                      Class="rounded-lg" />
+        </MudItem>
+        <MudItem xs="9">
+            <h1>@CharacterProfile.Name | @CharacterProfile.ActiveSpecName @CharacterProfile.Class</h1>
+            <h2>@CharacterProfile.Realm</h2>
+            @if (CharacterProfile.Guild != null && !string.IsNullOrEmpty(CharacterProfile.Guild.Name))
+            {
+                <h3>&lt;@CharacterProfile.Guild.Name&gt;</h3>
+            }
+        </MudItem>
+        <MudItem xs="12">
+            <a href="https://www.wowhead.com/talent-calc/embed/@CharacterProfile.Class.ToLower()/@CharacterProfile.ActiveSpecName.ToLower()/DAQFFRVRRARBRAoVKAUCQROVVREQJEQaVBiBQCAA">talent calc</a>
+        </MudItem>
+    </MudGrid>
+}

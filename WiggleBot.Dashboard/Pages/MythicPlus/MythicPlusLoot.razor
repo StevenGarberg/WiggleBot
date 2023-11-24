@@ -1,0 +1,40 @@
+﻿@page "/mythic-plus/loot"
+
+<h2>ITEM LEVEL LOOT TABLE</h2>
+<MudTable Items="@MythicPlusKeystoneLootList" Hover="true" Dense="@true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info">
+    <HeaderContent>
+        <MudTh>Keystone Level</MudTh>
+        <MudTh>End of Dungeon Item Level</MudTh>
+        <MudTh>Great Vault Item Level</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Keystone Level">@context.KeystoneLevel</MudTd>
+        <MudTd DataLabel="End of Dungeon Item Level">@context.EndOfDungeonItemLevel</MudTd>
+        <MudTd DataLabel="Great Vault Item Level">@context.GreatVaultItemLevel</MudTd>
+    </RowTemplate>
+</MudTable>
+
+@code {
+    private static MythicPlusKeystoneLoot[] MythicPlusKeystoneLootList { get; } =
+    {
+        new(2, 441, 454),
+        new(3, 444, 457),
+        new(4, 444, 460),
+        new(5, 447, 460),
+        new(6, 447, 463),
+        new(7, 450, 463),
+        new(8, 450, 467),
+        new(9, 454, 467),
+        new(10, 454, 470),
+        new(11, 457, 470),
+        new(12, 457, 473),
+        new(13, 460, 473),
+        new(14, 460, 473),
+        new(15, 463, 476),
+        new(16, 463, 476),
+        new(17, 467, 476),
+        new(18, 467, 476),
+        new(19, 467, 480),
+        new(20, 470, 483)
+    };
+}

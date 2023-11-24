@@ -1,0 +1,31 @@
+﻿@page "/mythic-plus/timers"
+
+<h2>DUNGEON TIMERS</h2>
+<MudTable Items="@mythicPlusDungeonTimerList" Hover="true" Dense="@true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info">
+    <HeaderContent>
+        <MudTh>Dungeon</MudTh>
+        <MudTh>Timer</MudTh>
+        <MudTh>+2</MudTh>
+        <MudTh>+3</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Dungeon">@context.DungeonName</MudTd>
+        <MudTd DataLabel="Timer">@context.Timer</MudTd>
+        <MudTd DataLabel="+2">@context.TimerPlus2</MudTd>
+        <MudTd DataLabel="+3">@context.TimerPlus3</MudTd>
+    </RowTemplate>
+</MudTable>
+
+@code {
+    private static MythicPlusDungeonTimer[] mythicPlusDungeonTimerList { get; } =
+    {
+        new("DOTI: Galakrond's Fall", "34:00", "27:12", "20:24"),
+        new("DOTI: Murazond's Rise", "35:00", "28:00", "21:00"),
+        new("Atal'Dazar", "30:00", "24:00", "18:00"),
+        new("Waycrest Manor", "36:40", "29:20", "22:00"),
+        new("Blackrook Hold", "36:00", "28:48", "23:24"),
+        new("Darkheart Thicket", "30:00", "24:00", "18:00"),
+        new("Everbloom", "33:00", "26:24", "19:48"),
+        new("Throne of the Tides", "34:00", "27:12", "20:24"),
+    };
+}
