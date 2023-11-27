@@ -1,0 +1,70 @@
+@page "/mythic-plus/affixes"
+
+<h2>AFFIX ROTATION</h2>
+<MudTable Items="@MythicPlusWeeklyAffixes" Hover="true" Dense="@true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info">
+    <HeaderContent>
+        <MudTh>Week #</MudTh>
+        <MudTh>Affix 1 (Level 2+)</MudTh>
+        <MudTh>Affix 2 (Level 7+)</MudTh>
+        <MudTh>Affix 3 (Level 14+)</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Week #">
+            @context.WeekNumber @(context.WeekNumber == WeekNumber ? "(current)" : "")
+        </MudTd>
+        <MudTd DataLabel="Affix 1 (Level 2+)">
+            <a href="@AffixLinks[context.Affix1].WowheadLink">
+                <img src="@AffixLinks[context.Affix1].IconName" alt="@context.Affix1" /> 
+                @context.Affix1
+            </a>
+        </MudTd>
+        <MudTd DataLabel="Affix 2 (Level 7+)">
+            <a href="@AffixLinks[context.Affix2].WowheadLink">
+                <img src="@AffixLinks[context.Affix2].IconName" alt="@context.Affix2" /> 
+                @context.Affix2
+            </a>
+        </MudTd>
+        <MudTd DataLabel="Affix 3 (Level 14+)">
+            <a href="@AffixLinks[context.Affix3].WowheadLink">
+                <img src="@AffixLinks[context.Affix3].IconName" alt="@context.Affix3" /> 
+                @context.Affix3
+            </a>
+        </MudTd>
+    </RowTemplate>
+</MudTable>
+
+@code {
+    private static DateTime SeasonStartDate { get; } = new(2023, 11, 14, 11, 0, 0);
+
+    private static byte WeekNumber => (byte)(((DateTime.Now - SeasonStartDate).Days / 7) + 1);
+
+    private static MythicPlusWeeklyAffixes[] MythicPlusWeeklyAffixes { get; } =
+    {
+        new(1, AffixType.Fortified, AffixType.Incorporeal, AffixType.Sanguine),
+        new(2, AffixType.Tyrannical, AffixType.Entangling, AffixType.Bursting),
+        new(3, AffixType.Fortified, AffixType.Volcanic, AffixType.Spiteful),
+        new(4, AffixType.Tyrannical, AffixType.Storming, AffixType.Raging),
+        new(5, AffixType.Fortified, AffixType.Entangling, AffixType.Bolstering),
+        new(6, AffixType.Tyrannical, AffixType.Incorporeal, AffixType.Spiteful),
+        new(7, AffixType.Fortified, AffixType.Afflicted, AffixType.Raging),
+        new(8, AffixType.Tyrannical, AffixType.Volcanic, AffixType.Sanguine),
+        new(9, AffixType.Fortified, AffixType.Storming, AffixType.Bursting),
+        new(10, AffixType.Tyrannical, AffixType.Afflicted, AffixType.Bolstering),
+    };
+    
+    private static IDictionary<AffixType, (string WowheadLink, string IconName)> AffixLinks { get; } = new Dictionary<AffixType, (string WowheadLink, string IconName)>
+    {
+        { AffixType.Fortified, ("https://www.wowhead.com/affix=10/fortified", "https://wow.zamimg.com/images/wow/icons/tiny/ability_toughness.gif") },
+        { AffixType.Tyrannical, ("https://www.wowhead.com/affix=9/tyrannical", "https://wow.zamimg.com/images/wow/icons/tiny/achievement_boss_archaedas.gif") },
+        { AffixType.Incorporeal, ("https://www.wowhead.com/affix=136/incorporeal", "https://wow.zamimg.com/images/wow/icons/tiny/achievement_boss_anomalus.gif") },
+        { AffixType.Entangling, ("https://www.wowhead.com/affix=134/entangling", "https://wow.zamimg.com/images/wow/icons/tiny/inv_misc_root_01.gif") },
+        { AffixType.Volcanic, ("https://www.wowhead.com/affix=3/volcanic", "https://wow.zamimg.com/images/wow/icons/tiny/spell_shaman_lavasurge.gif") },
+        { AffixType.Storming, ("https://www.wowhead.com/affix=124/storming", "https://wow.zamimg.com/images/wow/icons/tiny/spell_nature_cyclone.gif") },
+        { AffixType.Afflicted, ("https://www.wowhead.com/affix=135/afflicted", "https://wow.zamimg.com/images/wow/icons/tiny/spell_misc_emotionsad.gif") },
+        { AffixType.Sanguine, ("https://www.wowhead.com/affix=8/sanguine", "https://wow.zamimg.com/images/wow/icons/tiny/spell_shadow_bloodboil.gif") },
+        { AffixType.Bursting, ("https://www.wowhead.com/affix=11/bursting", "https://wow.zamimg.com/images/wow/icons/tiny/ability_ironmaidens_whirlofblood.gif") },
+        { AffixType.Spiteful, ("https://www.wowhead.com/affix=123/spiteful", "https://wow.zamimg.com/images/wow/icons/tiny/spell_holy_prayerofshadowprotection.gif") },
+        { AffixType.Raging, ("https://www.wowhead.com/affix=6/raging", "https://wow.zamimg.com/images/wow/icons/tiny/ability_warrior_focusedrage.gif") },
+        { AffixType.Bolstering, ("https://www.wowhead.com/affix=7/bolstering", "https://wow.zamimg.com/images/wow/icons/tiny/ability_warrior_battleshout.gif") }
+    };
+}
