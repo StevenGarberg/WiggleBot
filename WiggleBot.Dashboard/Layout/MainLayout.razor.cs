@@ -9,6 +9,12 @@ public partial class MainLayout : LayoutComponentBase, IDisposable
     private bool _drawerOpen = true;
     private bool _isDarkMode = true;
 
+    public bool IsDarkMode
+    {
+        get => _isDarkMode;
+        set => ToggleDarkMode();
+    }
+
     protected override async Task OnInitializedAsync()
     {
         _drawerOpen = await SettingsService.GetDrawerOpenAsync();
@@ -28,6 +34,7 @@ public partial class MainLayout : LayoutComponentBase, IDisposable
     {
         _isDarkMode = !_isDarkMode;
         await SettingsService.SetUseDarkModeAsync(_isDarkMode);
+        await InvokeAsync(StateHasChanged);
     }
     
     private async void OnDrawerOpened(object sender, EventArgs e)

@@ -9,9 +9,9 @@
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => ToggleDrawerOpened())" />
         <MudText Typo="Typo.h5" Class="ml-3">AR Club Dashboard</MudText>
         <MudSpacer />
-        <MudMenu Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit">
-            <MudMenuItem OnClick="@ToggleDarkMode">Toggle Dark Mode</MudMenuItem>
-        </MudMenu>
+        <MudToggleIconButton @bind-Toggled="@IsDarkMode"
+                             Icon="@Icons.Material.Filled.DarkMode" Color="@Color.Warning"
+                             ToggledIcon="@Icons.Material.Filled.LightMode" ToggledColor="Color.Warning"/>
     </MudAppBar>
     <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
         <MyNavMenu/>
