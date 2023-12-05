@@ -1,4 +1,5 @@
 @page "/mythic-plus/affixes"
+@using AsyncAwaitBestPractices
 
 <h2>AFFIX ROTATION</h2>
 <MudTable Items="@MythicPlusWeeklyAffixes" Hover="true" Dense="@true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info">
@@ -33,11 +34,38 @@
     </RowTemplate>
 </MudTable>
 
+<br/><br/>
+
+@if (!_showRemainingTime)
+{
+    <MudButton Variant="Variant.Filled" OnClick="@(() => _showRemainingTime = true)">Show Remaining Time Until Rotation</MudButton>
+}
+else
+{
+    <h1>Time Until Rotation: @RemainingTime.ToString("g")</h1>
+}
+
 @code {
-    private static DateTime SeasonStartDate { get; } = new(2023, 11, 14, 11, 0, 0);
+    private static DateTime SeasonStartDate { get; } = new(2023, 11, 14, 15, 0, 0);
+    private static byte WeekNumber => (byte)(((DateTime.UtcNow - SeasonStartDate).Days / 7) + 1);
+    private static TimeSpan RemainingTime => SeasonStartDate.AddDays(7 * WeekNumber) - DateTime.UtcNow;
+    
+    private bool _showRemainingTime;
 
-    private static byte WeekNumber => (byte)(((DateTime.Now - SeasonStartDate).Days / 7) + 1);
+    protected override async Task OnInitializedAsync()
+    {
+        UpdateTime().SafeFireAndForget();
+    }
 
+    private async Task UpdateTime()
+    {
+        while (true)
+        {
+            await Task.Delay(10);
+            StateHasChanged();
+        }
+    }
+    
     private static MythicPlusWeeklyAffixes[] MythicPlusWeeklyAffixes { get; } =
     {
         new(1, AffixType.Fortified, AffixType.Incorporeal, AffixType.Sanguine),
